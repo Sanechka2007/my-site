@@ -3,206 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Алексей Смирнов — Сайт-визитка</title>
+    <title>Зайцев Александр</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-hover: #040a1a;
-            --bg: #f8fafc;
-            --card-bg: #c42222;
-            --text: #1e293b;
-            --text-muted: #64748b;
+            --bg-color: #131320;
+            --card-bg: #1c1c2e;
+            --text-primary: #e4e4ec;
+            --text-secondary: #8f90a6;
+            --accent: #a594f9;
+            --border-color: #2a2a40;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 8%;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Шапка / Первый экран */
+        /* Верхняя панель */
         header {
-            text-align: center;
-            padding: 40px 20px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px;
+            display: flex;
+            justify-content: flex-end;
         }
 
-        .avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            background-color: #e2e8f0;
-            margin-bottom: 16px;
+        .top-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-color);
+            border-color: var(--text-primary);
+        }
+
+        .control-btn:hover:not(.active) {
+            border-color: var(--text-secondary);
+        }
+
+        /* Центральный блок */
+        main {
+            max-width: 700px;
+            margin: auto 0;
         }
 
         h1 {
-            font-size: 28px;
+            font-size: clamp(48px, 8vw, 92px);
+            font-weight: 800;
+            line-height: 0.98;
+            letter-spacing: -0.03em;
+            margin-bottom: 28px;
+        }
+
+        .role {
+            font-size: 20px;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 18px;
-            margin-bottom: 24px;
+        .bio {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 36px;
         }
 
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: background 0.2s;
+        /* Блок любимых игр */
+        .games-section {
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
         }
 
-        .btn:hover {
-            background-color: var(--primary-hover);
-        }
-
-        /* Секции */
-        section {
-            background: var(--card-bg);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            margin-bottom: 24px;
-        }
-
-        h2 {
-            font-size: 22px;
+        .games-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
             margin-bottom: 16px;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 8px;
         }
 
-        /* Услуги */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
-        }
-
-        .service-card {
-            background: var(--bg);
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .service-card h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .price {
-            display: inline-block;
-            margin-top: 12px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        /* Контакты */
-        .contacts-list {
+        .games-list {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
         }
 
-        .contacts-list a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 16px;
-            background: var(--bg);
+        /* Карточка игры и всплывающее окно */
+        .game-card {
+            position: relative;
+            width: 90px;
+            height: 120px;
             border-radius: 8px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .contacts-list a:hover {
-            background: #e2e8f0;
+        .game-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 7px;
+            display: block;
         }
 
-        footer {
-            text-align: center;
-            color: var(--text-muted);
+        .game-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            z-index: 10;
+        }
+
+        /* Всплывающее окно снизу */
+        .game-tooltip {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            width: 240px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 14px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+            pointer-events: none;
+        }
+
+        /* Маленькая стрелочка сверху окна */
+        .game-tooltip::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: 20px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--card-bg);
+            border-left: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            transform: rotate(45deg);
+        }
+
+        .game-card:hover .game-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .game-tooltip h3 {
             font-size: 14px;
-            margin-top: 32px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .game-tooltip p {
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+
+        /* Нижние ссылки */
+        footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            margin-top: 40px;
+        }
+
+        footer a {
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Главный блок -->
     <header>
-        <img src="https://placeholder.com" alt="Фото профиля" class="avatar">
-        <h1>Алексей Смирнов</h1>
-        <p class="subtitle">Частный веб-разработчик и дизайнер. Создаю быстрые сайты для малого бизнеса.</p>
-        <a href="#contacts" class="btn">Связаться со мной</a>
+        <div class="top-controls">
+            <button class="control-btn active" data-lang="ru">RU</button>
+            <button class="control-btn" data-lang="en">EN</button>
+        </div>
     </header>
 
-    <!-- Блок О себе -->
-    <section id="about">
-        <h2>Обо мне</h2>
-        <p>Помогаю предпринимателям и экспертам запускать проекты в интернете без лишних сложностей. За 4 года работы реализовал более 50 проектов: от лаконичных визиток до интернет-магазинов. Работаю по договору и всегда соблюдаю сроки.</p>
-    </section>
+    <main>
+        <h1 id="name">Зайцев<br>Александр</h1>
+        <p class="role" id="role">Студент второго курса ДВФУ </p>
+        <p class="bio" id="bio">Люблю игратьт в игры с друзьями.</p>
 
-    <!-- Блок Услуги -->
-    <section id="services">
-        <h2>Услуги и цены</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Сайт-визитка</h3>
-                <p>Одностраничный сайт с информацией о вас, услугах и контактами.</p>
-                <span class="price">от 10 000 ₽</span>
-            </div>
-            <div class="service-card">
-                <h3>Лендинг</h3>
-                <p>Продающая страница под конкретный товар или рекламную кампанию.</p>
-                <span class="price">от 20 000 ₽</span>
-            </div>
-            <div class="service-card">
-                <h3>Доработка сайта</h3>
-                <p>Правки верстки, ускорение загрузки и адаптация под смартфоны.</p>
-                <span class="price">от 3 000 ₽</span>
-            </div>
+        <div class="games-section">
+            <h2 class="games-title" id="gamesTitle">Любимые игры</h2>
+            <ul class="games-list" id="gamesList">
+                <li class="game-card">
+                    <img src="bg3.jpg" alt="Buldur's Gate 3">
+                    <div class="game-tooltip">
+                        <h3>Buldur's Gate 3</h3>
+                        <p data-ru="Отличная RPG с интересным сюжетом и пошаговой боёвкой не на одну сотню часов." data-en=
+                        "An excellent RPG with an engaging story and turn-based combat that offers hundreds of hours of gameplay."
+                        >Отличная RPG с интересным сюжетом и пошаговой боёвкой не на одну сотню часов.</p>
+                    </div>
+
+                </li>
+                <li class="game-card">
+                    <img src="cyber.jpg" alt="Buldur's Gate 3">
+                    <div class="game-tooltip">
+                        <h3>Cyberpunk 2077</h3>
+                        <p data-ru="Незабываемая игра с проработанным миром и приятной атмосферой(с модами)." data-en=
+                        "An unforgettable game with a well-developed world and a pleasant atmosphere (with mods)."
+                        >Незабываемая игра с проработанным миром и приятной атмосферой(с модами).</p>
+                    </div>
+
+                </li>
+                <li class="game-card">
+                    <img src="noita.jpg" alt="Buldur's Gate 3">
+                    <div class="game-tooltip">
+                        <h3>Noita</h3>
+                        <p data-ru="Уникальный рогалик на собственном движке с симуляцией каждого пикселя и прекрастным финким сюжетом. (Можно упороться грибами)" data-en=
+                        "A unique roguelike built on a custom engine, featuring per-pixel simulation and a fantastic, trippy narrative. (You can even get bed trip by mushrooms.)"
+                        >Уникальный рогалик на собственном движке с симуляцией каждого пикселя и прекрастным финким сюжетом. (Можно упороться грибами)</p>
+                    </div>
+
+                </li>
+                <li class="game-card">
+                    <img src="terraria.jpg" alt="Buldur's Gate 3">
+                    <div class="game-tooltip">
+                        <h3>Terraria</h3>
+                        <p data-ru="Легендарная песочница с кучей боссов для прохождения с друзьями." data-en=
+                        "A legendary sandbox game packed with bosses to take on with friends."
+                        >Легендарная песочница с кучей боссов для прохождения с друзьями.</p>
+                    </div>
+
+                </li>
+                <li class="game-card">
+                    <img src="ROR2.jpg" alt="Buldur's Gate 3">
+                    <div class="game-tooltip">
+                        <h3>Risk of Rain 2</h3>
+                        <p data-ru="Рогалик с огромной реиграбельностью и возможность поиграть с друзьями." data-en=
+                        "A roguelike with immense replayability and the option to play with friends."
+                        >Рогалик с огромной реиграбельностью и возможность поиграть с друзьями.</p>
+                    </div>
+
+                </li>
+            </ul>
         </div>
-    </section>
-
-    <!-- Блок Контакты -->
-    <section id="contacts">
-        <h2>Контакты</h2>
-        <p style="margin-bottom: 16px;">Напишите мне в удобный мессенджер или на почту — отвечу в течение часа:</p>
-        <ul class="contacts-list">
-            <li><a href="https://t.me" target="_blank">Telegram</a></li>
-            <li><a href="https://wa.me" target="_blank">WhatsApp</a></li>
-            <li><a href="mailto:hello@example.com">hello@example.com</a></li>
-            <li><a href="tel:+79000000000">+7 (900) 000-00-00</a></li>
-        </ul>
-    </section>
+    </main>
 
     <footer>
-        © 2026 Алексей Смирнов. Все права защищены.
+        <a href="https://github.com" target="_blank">GitHub</a>
+        <a href="https://t.me" target="_blank">Telegram</a>
     </footer>
-</div>
+
+    <script>
+        const translations = {
+            ru: {
+                title: "Зайцев Александр",
+                name: "Зайцев<br>Александр",
+                role: "Студент второго курса ДВФУ",
+                bio: "Люблю игратьт в игры с друзьями.",
+                gamesTitle: "Любимые игры"
+            },
+            en: {
+                title: "Alexander Zaitsev",
+                name: "Alexander<br>Zaitsev",
+                role: "Second-year student at FEFU",
+                bio: "I love playing games with friends.",
+                gamesTitle: "Favorite games"
+            }
+        };
+
+        const langButtons = document.querySelectorAll('[data-lang]');
+
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const lang = button.getAttribute('data-lang');
+                const content = translations[lang];
+
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                document.documentElement.lang = lang;
+                document.title = content.title;
+                document.getElementById('name').innerHTML = content.name;
+                document.getElementById('role').textContent = content.role;
+                document.getElementById('bio').textContent = content.bio;
+                document.getElementById('gamesTitle').textContent = content.gamesTitle;
+
+                // Перевод описаний внутри карточек игр
+                document.querySelectorAll('[data-ru]').forEach(el => {
+                    el.textContent = el.getAttribute(`data-${lang}`);
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
