@@ -33,6 +33,33 @@
             flex-direction: column;
             justify-content: space-between;
             padding: 40px 8%;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(to right, rgba(174, 19, 198, 0.344) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(174, 19, 198, 0.344) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+            -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+            pointer-events: none;
+            z-index: -1;
+            animation: gridPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.4;
+                filter: drop-shadow(0 0 2px rgba(165, 148, 249, 0.1));
+            }
+            100% {
+                opacity: 1;
+                filter: drop-shadow(0 0 6px rgba(165, 148, 249, 0.3));
+            }
         }
 
         /* Верхняя панель */
