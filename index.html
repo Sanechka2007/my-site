@@ -286,7 +286,7 @@
 <body>
 
     <div class="hero-preview" id="heroPreview">
-        <img src="" alt="" id="heroImg">
+        <img src="pic/" alt="" id="heroImg">
     </div>
 
     <header>
@@ -305,9 +305,9 @@
             <h2 class="games-title" id="gamesTitle">Любимые игры</h2>
             <ul class="games-list" id="gamesList">
 
-                <li class="game-card" data-hero="orin.jpg">
+                <li class="game-card" data-hero="pic/orin.jpg, pic/karlah.jpg, pic/heart.jpg">
                     <a href="https://store.steampowered.com/app/1086940?snr=5000_5100__" target="_blank">
-                        <img src="bg3.jpg" alt="Buldur's Gate 3">
+                        <img src="pic/bg3.jpg" alt="Buldur's Gate 3">
                     </a>
                     <div class="game-tooltip">
                         <h3>Buldur's Gate 3</h3>
@@ -316,9 +316,9 @@
                         >Отличная RPG с интересным сюжетом и пошаговой боёвкой не на одну сотню часов.</p>
                     </div>
                 </li>
-                <li class="game-card" data-hero="punk.jpg">
+                <li class="game-card" data-hero="pic/punk.jpg, pic/jony.jpg">
                     <a  href="https://store.steampowered.com/app/1091500/Cyberpunk_2077/" target="_blank">
-                        <img src="cyber.jpg" alt="Cyberpunk 2077">
+                        <img src="pic/cyber.jpg" alt="Cyberpunk 2077">
                     </a>
                         <div class="game-tooltip">
                         <h3>Cyberpunk 2077</h3>
@@ -327,9 +327,9 @@
                         >Незабываемая игра с проработанным миром и приятной атмосферой(с модами).</p>
                     </div>
                 </li>
-                <li class="game-card" data-hero="noita2.jpg">
+                <li class="game-card" data-hero="pic/noita2.jpg, pic/noita3.jpg, pic/noita4.jpg">
                     <a  href="https://store.steampowered.com/app/881100?snr=5000_5100__" target="_blank">
-                        <img src="noita.jpg" alt="Noita">
+                        <img src="pic/noita.jpg" alt="Noita">
                     </a>    
                     <div class="game-tooltip">
                         <h3>Noita</h3>
@@ -338,9 +338,9 @@
                         >Уникальный рогалик на собственном движке с симуляцией каждого пикселя и прекрастным финким сюжетом. (Можно упороться грибами)</p>
                     </div>
                 </li>
-                <li class="game-card" data-hero="terra.jpg">
+                <li class="game-card" data-hero="pic/terra.jpg, pic/terra2.jpg">
                     <a  href="https://store.steampowered.com/app/105600?snr=5000_5100__" target="_blank">
-                        <img src="terraria.jpg" alt="Terraria">
+                        <img src="pic/terraria.jpg" alt="Terraria">
                     </a>    
                     <div class="game-tooltip">
                         <h3>Terraria</h3>
@@ -349,9 +349,9 @@
                         >Легендарная песочница с кучей боссов для прохождения с друзьями.</p>
                     </div>
                 </li>
-                <li class="game-card" data-hero="ror.jpg">
+                <li class="game-card" data-hero="pic/ror.jpg, pic/ror1.jpg">
                     <a href="https://store.steampowered.com/app/632360/Risk_of_Rain_2/?l=russian" target="_blank">
-                        <img src="ROR2.jpg" alt="Risk of Rain 2">
+                        <img src="pic/ROR2.jpg" alt="Risk of Rain 2">
                     </a>
                     <div class="game-tooltip">
                         <h3>Risk of Rain 2</h3>
@@ -410,23 +410,47 @@
                 });
             });
         });
-         const heroPreview = document.getElementById('heroPreview');
+                const heroPreview = document.getElementById('heroPreview');
         const heroImg = document.getElementById('heroImg');
         const gameCards = document.querySelectorAll('.game-card');
+        let heroInterval = null; // Переменная для хранения таймера
 
         gameCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
-                const heroSrc = card.getAttribute('data-hero');
-                if (heroSrc) {
-                    heroImg.src = heroSrc;
-                    heroPreview.classList.add('visible');
+                const rawHeroes = card.getAttribute('data-hero');
+                if (!rawHeroes) return;
+
+                // Разбиваем строку на список картинок и убираем лишние пробелы
+                const heroes = rawHeroes.split(',').map(item => item.trim());
+                let currentIndex = 0;
+
+                // Показываем первую картинку сразу
+                heroImg.src = heroes[currentIndex];
+                heroPreview.classList.add('visible');
+
+                // Если картинок больше одной, запускаем смену каждые 2.5 секунды
+                if (heroes.length > 1) {
+                    heroInterval = setInterval(() => {
+                        // Плавно скрываем текущую картинку
+                        heroPreview.classList.remove('visible');
+
+                        // Ждём 350 мс (время анимации затухания), меняем картинку и показываем снова
+                        setTimeout(() => {
+                            currentIndex = (currentIndex + 1) % heroes.length;
+                            heroImg.src = heroes[currentIndex];
+                            heroPreview.classList.add('visible');
+                        }, 350);
+                    }, 1500); // 2500 мс = 2.5 секунды
                 }
             });
 
             card.addEventListener('mouseleave', () => {
+                // Останавливаем таймер и скрываем блок, когда убрали мышку
+                clearInterval(heroInterval);
                 heroPreview.classList.remove('visible');
             });
         });
+
     </script>
 
 </body>
