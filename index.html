@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Зайцев Александр</title>
@@ -241,9 +241,53 @@
             color: var(--accent);
             border-color: var(--accent);
         }
+
+        .hero-preview {
+            position: fixed;
+            right: 4%;
+            bottom: 0;
+            width: 45vw;
+            max-width: 560px;
+            height: 85vh;
+            pointer-events: none;
+            z-index: -1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(30px) scale(0.98);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .hero-preview.visible {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
+        .hero-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            /* Мягкое растворение нижнего и левого краёв */
+            mask-image: linear-gradient(to top, transparent 0%, black 18%), linear-gradient(to right, transparent 0%, black 22%);
+            mask-composite: intersect;
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 18%), linear-gradient(to right, transparent 0%, black 22%);
+            -webkit-mask-composite: source-in;
+        }
+
+        /* На телефонах и узких окнах скрываем, чтобы не мешать тексту */
+        @media (max-width: 900px) {
+            .hero-preview {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <div class="hero-preview" id="heroPreview">
+        <img src="" alt="" id="heroImg">
+    </div>
 
     <header>
         <div class="top-controls">
@@ -261,7 +305,7 @@
             <h2 class="games-title" id="gamesTitle">Любимые игры</h2>
             <ul class="games-list" id="gamesList">
 
-                <li class="game-card">
+                <li class="game-card" data-hero="orin.jpg">
                     <a href="https://store.steampowered.com/app/1086940?snr=5000_5100__" target="_blank">
                         <img src="bg3.jpg" alt="Buldur's Gate 3">
                     </a>
@@ -272,7 +316,7 @@
                         >Отличная RPG с интересным сюжетом и пошаговой боёвкой не на одну сотню часов.</p>
                     </div>
                 </li>
-                <li class="game-card">
+                <li class="game-card" data-hero="punk.jpg">
                     <a  href="https://store.steampowered.com/app/1091500/Cyberpunk_2077/" target="_blank">
                         <img src="cyber.jpg" alt="Cyberpunk 2077">
                     </a>
@@ -283,7 +327,7 @@
                         >Незабываемая игра с проработанным миром и приятной атмосферой(с модами).</p>
                     </div>
                 </li>
-                <li class="game-card">
+                <li class="game-card" data-hero="noita2.jpg">
                     <a  href="https://store.steampowered.com/app/881100?snr=5000_5100__" target="_blank">
                         <img src="noita.jpg" alt="Noita">
                     </a>    
@@ -294,7 +338,7 @@
                         >Уникальный рогалик на собственном движке с симуляцией каждого пикселя и прекрастным финким сюжетом. (Можно упороться грибами)</p>
                     </div>
                 </li>
-                <li class="game-card">
+                <li class="game-card" data-hero="terra.jpg">
                     <a  href="https://store.steampowered.com/app/105600?snr=5000_5100__" target="_blank">
                         <img src="terraria.jpg" alt="Terraria">
                     </a>    
@@ -305,7 +349,7 @@
                         >Легендарная песочница с кучей боссов для прохождения с друзьями.</p>
                     </div>
                 </li>
-                <li class="game-card">
+                <li class="game-card" data-hero="ror.jpg">
                     <a href="https://store.steampowered.com/app/632360/Risk_of_Rain_2/?l=russian" target="_blank">
                         <img src="ROR2.jpg" alt="Risk of Rain 2">
                     </a>
@@ -364,6 +408,23 @@
                 document.querySelectorAll('[data-ru]').forEach(el => {
                     el.textContent = el.getAttribute(`data-${lang}`);
                 });
+            });
+        });
+         const heroPreview = document.getElementById('heroPreview');
+        const heroImg = document.getElementById('heroImg');
+        const gameCards = document.querySelectorAll('.game-card');
+
+        gameCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const heroSrc = card.getAttribute('data-hero');
+                if (heroSrc) {
+                    heroImg.src = heroSrc;
+                    heroPreview.classList.add('visible');
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                heroPreview.classList.remove('visible');
             });
         });
     </script>
